@@ -1,7 +1,7 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component} from '@angular/core';
 import { style } from '@angular/animations';
-import { Post } from '../post.model';
 import { NgForm } from '@angular/forms'
+import { PostsService } from '../posts.service';
 
 @Component({
   selector: 'app-post-create',
@@ -14,9 +14,9 @@ export class PostCreateComponent{
  // enteredValue = '';                        //19. Getting User Input
   enteredTitle = '';
   enteredContent = '';
-  @Output() postCreated = new EventEmitter<Post>();
   //newPost = 'No Content';
 
+  constructor(public postsService: PostsService){}
 
   onSavePost(form: NgForm){
     //alert('Post saved !!');
@@ -30,12 +30,8 @@ export class PostCreateComponent{
     {
       return;
     }
-    const post: Post = {
-      title: form.value.title,
-      content: form.value.content
-    };
     //console.log("title : " + post.title);
     //console.log("content: " + post.content);
-    this.postCreated.emit(post);
+    this.postsService.addPost(form.value.title, form.value.content);
   }
 }
