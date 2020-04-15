@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import { style } from '@angular/animations';
 import { Post } from '../post.model';
+import { NgForm } from '@angular/forms'
 
 @Component({
   selector: 'app-post-create',
@@ -17,7 +18,7 @@ export class PostCreateComponent{
   //newPost = 'No Content';
 
 
-  onSavePost(){
+  onSavePost(form: NgForm){
     //alert('Post saved !!');
     //console.log(postInput);
     //console.dir(postInput);
@@ -25,9 +26,13 @@ export class PostCreateComponent{
     //this.newPost = postInput.value;
     //this.newPost = this.enteredValue;           //19. Getting User Input
 
+    if(form.invalid)
+    {
+      return;
+    }
     const post: Post = {
-      title: this.enteredTitle,
-      content: this.enteredContent
+      title: form.value.title,
+      content: form.value.content
     };
     //console.log("title : " + post.title);
     //console.log("content: " + post.content);

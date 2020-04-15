@@ -4,13 +4,30 @@
 <!--button (click) = "onSavePost(postInput)">SavePost</button-->
 <!--button (click) = "onSavePost()">SavePost</button-->                     <!-- 19. Getting User Input -->
 <mat-card>
-  <mat-form-field>
-    <input matInput type="text" [(ngModel)]="enteredTitle">
-  </mat-form-field>
-  <mat-form-field>
-    <textarea matInput rows="6" [(ngModel)]="enteredContent"></textarea>
-  </mat-form-field>
-  <button mat-raised-button
-  color="accent"
-  (click) = "onSavePost()">SavePost</button>
+  <form (submit)="onSavePost(postForm)" #postForm='ngForm'>
+    <mat-form-field>
+      <input
+      matInput
+      type="text"
+      name="title"
+      required
+      minlength="2"
+      ngModel
+      #title='ngModel'>
+      <mat-error *ngIf="title.invalid">{{ "Please enter the valid title!" }}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <textarea
+      matInput
+      rows="6"
+      name="content"
+      required
+      ngModel
+      #content="ngModel"></textarea>
+      <mat-error *ngIf="content.invalid">{{ 'Please enter the content' }}</mat-error>
+    </mat-form-field>
+    <button mat-raised-button
+    color="accent"
+    type="submit">SavePost</button>
+  </form>
 </mat-card>
