@@ -33,5 +33,6 @@ export class PostCreateComponent{
     //console.log("title : " + post.title);
     //console.log("content: " + post.content);
     this.postsService.addPost(form.value.title, form.value.content);
+    form.resetForm();
   }
 }
