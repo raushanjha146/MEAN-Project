@@ -17,12 +17,18 @@ export class PostsService{
     });
   }
 
-  getPostUpdateListiner() {
+  getPostUpdateListener() {
     return this.postsUpdated.asObservable();
   }
-  addPost(id: string, title: string, content: string){
-    const post: Post = {id: null, title: title, content: content};
-    this.posts.push(post);
-    this.postsUpdated.next([...this.posts]);
+
+  addPost(title: string, content: string) {
+    const post: Post = { id: null, title: title, content: content };
+    this.httpClient
+      .post<{ message: string }>("http://localhost:3000/api/posts", post)
+      .subscribe(responseData => {
+        console.log(responseData.message);
+        this.posts.push(post);
+        this.postsUpdated.next([...this.posts]);
+      });
   }
 }

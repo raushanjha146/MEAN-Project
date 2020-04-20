@@ -30,9 +30,9 @@ export class PostCreateComponent{
     {
       return;
     }
-    //console.log("title : " + post.title);
-    //console.log("content: " + post.content);
-    this.postsService.addPost(null, form.value.title, form.value.content);
+    //console.log("title : " + form.value.title);
+    //console.log("content: " + form.value.content);
+    this.postsService.addPost(form.value.title, form.value.content);
     form.resetForm();
   }
 }

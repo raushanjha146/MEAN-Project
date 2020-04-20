@@ -1,17 +1,33 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin","*");
   res.setHeader(
-    "Access-Control-Allow-Header",
-    "Origin, X-Request-With, Content-Type, Accept");
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, X-Auth-Token");
+  //res.setHeader("Access-Control-Allow-Headers","*");
   res.setHeader(
-    "Access-Control-Allow-Method",
-    "GET, POST, PATCH, DELETE, OPTIONS");
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, PATCH, DELETE, OPTIONS");
+  //res.setHeader('Access-Control-Allow-Credentials','true');
   next();
 });
-app.use('/api/posts',(req, res, next) => {
+
+app.post("/api/posts", (req, res, next) => {
+  const post = req.body;
+  console.log(post);
+  res.status(200).json({
+    message: 'post added successfully!'
+  });
+  //next();
+});
+
+app.get('/api/posts',(req, res, next) => {
 
   const posts = [
     {id: '1', title: 'First server-side posts', content: 'First post is coming from server!'},
