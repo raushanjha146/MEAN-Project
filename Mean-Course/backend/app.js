@@ -1,6 +1,19 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+
+const Post = require('./models/post');
+
 const app = express();
+
+//cuPCKh5DF0FirKfZ
+mongoose.connect("mongodb+srv://raushan:cuPCKh5DF0FirKfZ@cluster0-eggqt.mongodb.net/test?retryWrites=true&w=majority")
+  .then(() => {
+    console.log("Connected to mongodb database"); 
+  })
+  .catch(() => {
+    console.log("Connection error!");
+  });
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -19,8 +32,12 @@ app.use((req, res, next) => {
 });
 
 app.post("/api/posts", (req, res, next) => {
-  const post = req.body;
+  const post = new Post({
+    title: req.body.title,
+    content: req.body.content
+  });
   console.log(post);
+  post.save();
   res.status(200).json({
     message: 'post added successfully!'
   });
@@ -30,7 +47,7 @@ app.post("/api/posts", (req, res, next) => {
 app.get('/api/posts',(req, res, next) => {
 
   const posts = [
-    {id: '1', title: 'First server-side posts', content: 'First post is coming from server!'},
+    {id: '1', title: 'First server-side posts changes', content: 'First post is coming from server!'},
     {id: '2', title: 'Second server-side posts', content: 'Second post is coming from server!'},
     {id: '3', title: 'Third server-side posts', content: 'Third post is coming from server!'}
   ];
